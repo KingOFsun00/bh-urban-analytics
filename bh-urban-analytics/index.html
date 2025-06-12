@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BH Urban Analytics</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+</head>
+<body>
+  <header>
+    <h1>Dados Urbanos de Belo Horizonte</h1>
+  </header>
+  
+  <div class="dashboard">
+    <div class="map-container">
+      <h2>Rotas de Ônibus em Tempo Real</h2>
+      <div id="map"></div>
+    </div>
+    
+    <div class="data-section">
+      <div class="chart-container">
+        <h2>Indicadores de Criminalidade</h2>
+        <canvas id="crime-chart"></canvas>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
