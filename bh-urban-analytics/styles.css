@@ -1,33 +1,114 @@
+/* Estilos gerais para o corpo da página */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0;
-  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte limpa e moderna */
+  margin: 0; /* Remove margem padrão do body */
+  padding: 0; /* Remove padding padrão do body */
+  background-color: #f4f7f6; /* Cor de fundo suave para o corpo */
+  color: #333; /* Cor de texto padrão */
 }
 
+/* Estilos para o cabeçalho da página */
 header {
-  background-color: #1565c0;
-  color: white;
-  padding: 1rem;
-  text-align: center;
+  background-color: #1565c0; /* Azul escuro para o cabeçalho */
+  color: white; /* Texto branco no cabeçalho */
+  padding: 1.5rem; /* Aumenta um pouco o padding para melhor visual */
+  text-align: center; /* Centraliza o texto */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Sombra sutil para destaque */
 }
 
+h1 {
+  margin: 0; /* Remove margem padrão do h1 dentro do header */
+  font-size: 2.5rem; /* Tamanho maior para o título principal */
+}
+
+h2 {
+  font-size: 1.8rem; /* Tamanho para subtítulos */
+  color: #1565c0; /* Cor azul para subtítulos */
+  text-align: center; /* Centraliza os subtítulos */
+  margin-top: 2rem; /* Margem superior para separar seções */
+  margin-bottom: 1rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+    color: #1565c0;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* Container principal para o dashboard, usando Grid Layout para responsividade */
 .dashboard {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  padding: 1rem;
+  /* Define duas colunas para telas maiores e uma coluna para telas menores */
+  grid-template-columns: 1fr; /* Padrão para mobile: uma coluna */
+  gap: 1.5rem; /* Espaçamento entre os itens do grid */
+  padding: 1.5rem; /* Padding em volta do dashboard */
+  max-width: 1200px; /* Limita a largura máxima do dashboard */
+  margin: 2rem auto; /* Centraliza o dashboard na página */
 }
 
+/* Media query para telas médias (tablets e desktops pequenos) */
+@media (min-width: 768px) {
+  .dashboard {
+    grid-template-columns: 1fr 1fr; /* Duas colunas para telas maiores */
+  }
+}
+
+/* Estilos para o mapa */
 #map {
-  height: 500px;
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  height: 500px; /* Altura fixa para o mapa */
+  width: 100%; /* Ocupa a largura total do seu contêiner */
+  border: 1px solid #ccc; /* Borda leve */
+  border-radius: 8px; /* Cantos arredondados */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra sutil */
 }
 
+/* Estilos para o contêiner do gráfico e outros dados */
 .chart-container {
-  background: white;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: white; /* Fundo branco */
+  padding: 1.5rem; /* Padding interno */
+  border-radius: 8px; /* Cantos arredondados */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra sutil */
+  display: flex; /* Usa flexbox para organizar o conteúdo */
+  flex-direction: column; /* Organiza os itens em coluna */
+  justify-content: center; /* Centraliza verticalmente o conteúdo */
+  align-items: center; /* Centraliza horizontalmente o conteúdo */
 }
+
+/* Estilos para o canvas do gráfico de criminalidade */
+#crime-chart {
+  /* ESTE É O AJUSTE PRINCIPAL para controlar a altura do gráfico */
+  height: 400px; /* <--- AJUSTE AQUI: Defina a altura desejada para o canvas */
+  width: 100% !important; /* Garante que o canvas ocupe 100% da largura do contêiner */
+  max-height: 400px; /* Define uma altura máxima para evitar que ele se estenda demais */
+}
+
+/* Estilos para o contêiner de dados adicionais de BH */
+#dados-bh {
+  background: white; /* Fundo branco */
+  padding: 1.5rem; /* Padding interno */
+  border-radius: 8px; /* Cantos arredondados */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra sutil */
+  margin-top: 1.5rem; /* Margem superior para separar do gráfico se estiver no mesmo contêiner, ou do item anterior se estiver em um grid separado */
+  text-align: center; /* Centraliza o texto */
+}
+
+#dados-bh p {
+    margin-bottom: 0.5rem; /* Espaçamento menor entre parágrafos de dados */
+    font-size: 1.1rem;
+}
+
+#dados-bh strong {
+    color: #0d47a1; /* Cor para os labels em negrito */
+}
+
+/* Estilos para o rodapé (opcional) */
+footer {
+    text-align: center;
+    padding: 1rem;
+    margin-top: 3rem;
+    background-color: #e0e0e0;
+    color: #555;
+    font-size: 0.9rem;
+}
+
