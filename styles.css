@@ -1,114 +1,281 @@
 /* Estilos gerais para o corpo da página */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte limpa e moderna */
-  margin: 0; /* Remove margem padrão do body */
-  padding: 0; /* Remove padding padrão do body */
-  background-color: #f4f7f6; /* Cor de fundo suave para o corpo */
-  color: #333; /* Cor de texto padrão */
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: #e6e6e6;
+  line-height: 1.6;
 }
+
+/* Importação da fonte Poppins do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 /* Estilos para o cabeçalho da página */
 header {
-  background-color: #1565c0; /* Azul escuro para o cabeçalho */
-  color: white; /* Texto branco no cabeçalho */
-  padding: 1.5rem; /* Aumenta um pouco o padding para melhor visual */
-  text-align: center; /* Centraliza o texto */
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Sombra sutil para destaque */
+  background: linear-gradient(90deg, #ff416c 0%, #ff4b2b 100%);
+  color: white;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(255, 65, 108, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
 }
 
 h1 {
-  margin: 0; /* Remove margem padrão do h1 dentro do header */
-  font-size: 2.5rem; /* Tamanho maior para o título principal */
+  margin: 0;
+  font-size: 2.8rem;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  letter-spacing: 1px;
 }
 
 h2 {
-  font-size: 1.8rem; /* Tamanho para subtítulos */
-  color: #1565c0; /* Cor azul para subtítulos */
-  text-align: center; /* Centraliza os subtítulos */
-  margin-top: 2rem; /* Margem superior para separar seções */
-  margin-bottom: 1rem;
+  font-size: 2rem;
+  background: linear-gradient(90deg, #00dbde 0%, #fc00ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-align: center;
+  margin-top: 2.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #fc00ff;
+  display: inline-block;
 }
 
 h3 {
-    font-size: 1.5rem;
-    color: #1565c0;
-    margin-bottom: 1rem;
-    text-align: center;
+  font-size: 1.6rem;
+  background: linear-gradient(90deg, #f7971e 0%, #ffd200 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  display: inline-block;
+  box-shadow: 0 4px 8px rgba(247, 151, 30, 0.2);
 }
 
-/* Container principal para o dashboard, usando Grid Layout para responsividade */
+/* Container principal para o dashboard */
 .dashboard {
   display: grid;
-  /* Define duas colunas para telas maiores e uma coluna para telas menores */
-  grid-template-columns: 1fr; /* Padrão para mobile: uma coluna */
-  gap: 1.5rem; /* Espaçamento entre os itens do grid */
-  padding: 1.5rem; /* Padding em volta do dashboard */
-  max-width: 1200px; /* Limita a largura máxima do dashboard */
-  margin: 2rem auto; /* Centraliza o dashboard na página */
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 2rem auto;
 }
 
-/* Media query para telas médias (tablets e desktops pequenos) */
 @media (min-width: 768px) {
   .dashboard {
-    grid-template-columns: 1fr 1fr; /* Duas colunas para telas maiores */
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1200px) {
+  .dashboard {
+    grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  }
+  
+  #map {
+    grid-column: span 2;
+    grid-row: 1;
+    height: 600px;
+  }
+  
+  .chart-container:nth-of-type(1) {
+    grid-column: 3;
+    grid-row: 1;
+  }
+  
+  .chart-container:nth-of-type(2) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  
+  #dados-bh {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  
+  #dados-economicos-mg {
+    grid-column: 3;
+    grid-row: 2;
   }
 }
 
 /* Estilos para o mapa */
 #map {
-  height: 500px; /* Altura fixa para o mapa */
-  width: 100%; /* Ocupa a largura total do seu contêiner */
-  border: 1px solid #ccc; /* Borda leve */
-  border-radius: 8px; /* Cantos arredondados */
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra sutil */
+  height: 500px;
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  transition: transform 0.3s ease;
 }
 
-/* Estilos para o contêiner do gráfico e outros dados */
-.chart-container {
-  background: white; /* Fundo branco */
-  padding: 1.5rem; /* Padding interno */
-  border-radius: 8px; /* Cantos arredondados */
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra sutil */
-  display: flex; /* Usa flexbox para organizar o conteúdo */
-  flex-direction: column; /* Organiza os itens em coluna */
-  justify-content: center; /* Centraliza verticalmente o conteúdo */
-  align-items: center; /* Centraliza horizontalmente o conteúdo */
+#map:hover {
+  transform: translateY(-5px);
 }
 
-/* Estilos para o canvas do gráfico de criminalidade */
-#crime-chart {
-  /* ESTE É O AJUSTE PRINCIPAL para controlar a altura do gráfico */
-  height: 400px; /* <--- AJUSTE AQUI: Defina a altura desejada para o canvas */
-  width: 100% !important; /* Garante que o canvas ocupe 100% da largura do contêiner */
-  max-height: 400px; /* Define uma altura máxima para evitar que ele se estenda demais */
+/* Estilos para os contêineres */
+.chart-container, 
+#dados-bh, 
+#dados-economicos-mg {
+  background: rgba(30, 30, 60, 0.7);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Estilos para o contêiner de dados adicionais de BH */
-#dados-bh {
-  background: white; /* Fundo branco */
-  padding: 1.5rem; /* Padding interno */
-  border-radius: 8px; /* Cantos arredondados */
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra sutil */
-  margin-top: 1.5rem; /* Margem superior para separar do gráfico se estiver no mesmo contêiner, ou do item anterior se estiver em um grid separado */
-  text-align: center; /* Centraliza o texto */
+.chart-container:hover, 
+#dados-bh:hover, 
+#dados-economicos-mg:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  background: rgba(40, 40, 80, 0.8);
 }
 
-#dados-bh p {
-    margin-bottom: 0.5rem; /* Espaçamento menor entre parágrafos de dados */
-    font-size: 1.1rem;
+/* Estilos para os gráficos */
+#crime-chart, 
+#economic-chart {
+  height: 350px;
+  width: 100% !important;
+  max-height: 350px;
 }
 
-#dados-bh strong {
-    color: #0d47a1; /* Cor para os labels em negrito */
+/* Estilos para os dados */
+#dados-bh p, 
+#dados-economicos-mg p {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: #e6e6e6;
 }
 
-/* Estilos para o rodapé (opcional) */
+#dados-bh strong, 
+#dados-economicos-mg strong {
+  color: #00dbde;
+  font-weight: 500;
+}
+
+/* Cards de dados */
+.data-card {
+  background: linear-gradient(135deg, rgba(255,75,43,0.15) 0%, rgba(255,65,108,0.15) 100%);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin: 1rem 0;
+  width: 100%;
+  text-align: center;
+  border-left: 4px solid #ff416c;
+}
+
+.data-card h4 {
+  margin-top: 0;
+  color: #ffd200;
+  font-size: 1.3rem;
+}
+
+/* Estilos para o rodapé */
 footer {
-    text-align: center;
-    padding: 1rem;
-    margin-top: 3rem;
-    background-color: #e0e0e0;
-    color: #555;
-    font-size: 0.9rem;
+  text-align: center;
+  padding: 2rem;
+  margin-top: 3rem;
+  background: linear-gradient(90deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+  color: #a1a1a1;
+  font-size: 0.9rem;
+  position: relative;
 }
 
+footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #ff416c 0%, #ff4b2b 100%);
+}
+
+/* Efeitos de hover para interatividade */
+a, button {
+  transition: all 0.3s ease;
+}
+
+/* Barra de rolagem personalizada */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a2e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#ff416c, #ff4b2b);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(#ff4b2b, #ff416c);
+}
+
+/* Animações sutis */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chart-container, 
+#dados-bh, 
+#dados-economicos-mg,
+#map {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* Responsividade adicional */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.6rem;
+  }
+  
+  h3 {
+    font-size: 1.3rem;
+  }
+  
+  .dashboard {
+    padding: 1rem;
+  }
+  
+  .chart-container, 
+  #dados-bh, 
+  #dados-economicos-mg {
+    padding: 1.5rem 1rem;
+  }
+}
