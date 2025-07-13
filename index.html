@@ -3,36 +3,358 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BH Urban Analytics</title>
+  <title>BH Urban Analytics | Dashboard Inteligente</title>
+  <meta name="description" content="Dashboard interativo com dados urbanos de Belo Horizonte e Minas Gerais">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <header>
-    <h1>Dados Urbanos de Belo Horizonte</h1>
+    <div class="header-content">
+      <h1><i class="fas fa-city"></i> BH Urban Analytics</h1>
+      <p class="subtitle">Dashboard Inteligente de Dados Urbanos</p>
+    </div>
+    <div class="header-actions">
+      <button id="theme-toggle" aria-label="Alternar tema">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button id="refresh-data" aria-label="Atualizar dados">
+        <i class="fas fa-sync-alt"></i>
+      </button>
+    </div>
   </header>
   
-  <div class="dashboard">
-    <div class="map-container">
-      <h2>Rotas de Ônibus em Tempo Real</h2>
-      <div id="map"></div>
-    </div>
-    <div id="dados-bh"></div>
-    <div class="data-section">
-      <div class="chart-container">
-        <h2>Indicadores de Criminalidade</h2>
-        <canvas id="crime-chart"></canvas>
+  <nav class="main-nav">
+    <ul>
+      <li><a href="#" class="active" data-section="overview"><i class="fas fa-home"></i> Visão Geral</a></li>
+      <li><a href="#" data-section="transport"><i class="fas fa-bus"></i> Transporte</a></li>
+      <li><a href="#" data-section="safety"><i class="fas fa-shield-alt"></i> Segurança</a></li>
+      <li><a href="#" data-section="economy"><i class="fas fa-chart-line"></i> Economia</a></li>
+      <li><a href="#" data-section="about"><i class="fas fa-info-circle"></i> Sobre</a></li>
+    </ul>
+  </nav>
+  
+  <main class="dashboard-container">
+    <section class="dashboard-section" id="overview-section">
+      <div class="map-container card">
+        <div class="card-header">
+          <h2><i class="fas fa-map-marked-alt"></i> Mapa Interativo de Belo Horizonte</h2>
+          <div class="map-controls">
+            <button id="zoom-in"><i class="fas fa-search-plus"></i></button>
+            <button id="zoom-out"><i class="fas fa-search-minus"></i></button>
+            <button id="locate-me"><i class="fas fa-location-arrow"></i></button>
+          </div>
+        </div>
+        <div id="map"></div>
+        <div class="map-legend">
+          <span><i class="fas fa-bus" style="color: #ff6b6b"></i> Ônibus</span>
+          <span><i class="fas fa-subway" style="color: #48dbfb"></i> Metrô</span>
+          <span><i class="fas fa-map-marker-alt" style="color: #feca57"></i> Pontos de Interesse</span>
+        </div>
+      </div>
+      
+      <div class="stats-grid">
+        <div class="stat-card card">
+          <div class="stat-icon" style="background-color: #ff6b6b22;">
+            <i class="fas fa-users" style="color: #ff6b6b;"></i>
+          </div>
+          <div class="stat-info">
+            <h3>População</h3>
+            <p class="stat-value">2.52 <small>milhões</small></p>
+            <p class="stat-change"><i class="fas fa-arrow-up"></i> 1.2% (2023)</p>
+          </div>
+        </div>
+        
+        <div class="stat-card card">
+          <div class="stat-icon" style="background-color: #48dbfb22;">
+            <i class="fas fa-briefcase" style="color: #48dbfb;"></i>
+          </div>
+          <div class="stat-info">
+            <h3>Emprego</h3>
+            <p class="stat-value">1.18 <small>milhões</small></p>
+            <p class="stat-change"><i class="fas fa-arrow-up"></i> 3.4% (2023)</p>
+          </div>
+        </div>
+        
+        <div class="stat-card card">
+          <div class="stat-icon" style="background-color: #1dd1a122;">
+            <i class="fas fa-home" style="color: #1dd1a1;"></i>
+          </div>
+          <div class="stat-info">
+            <h3>Moradias</h3>
+            <p class="stat-value">834.5 <small>mil</small></p>
+            <p class="stat-change"><i class="fas fa-arrow-up"></i> 2.1% (2023)</p>
+          </div>
+        </div>
+        
+        <div class="stat-card card">
+          <div class="stat-icon" style="background-color: #f368e022;">
+            <i class="fas fa-car" style="color: #f368e0;"></i>
+          </div>
+          <div class="stat-info">
+            <h3>Veículos</h3>
+            <p class="stat-value">1.72 <small>milhões</small></p>
+            <p class="stat-change"><i class="fas fa-arrow-up"></i> 4.7% (2023)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="dashboard-section hidden" id="transport-section">
+      <div class="card full-width">
+        <div class="card-header">
+          <h2><i class="fas fa-bus"></i> Sistema de Transporte Público</h2>
+          <div class="time-filter">
+            <select id="transport-time-filter">
+              <option value="realtime">Tempo Real</option>
+              <option value="day">Últimas 24h</option>
+              <option value="week">Última Semana</option>
+              <option value="month">Último Mês</option>
+            </select>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="transport-chart"></canvas>
+        </div>
+        <div class="chart-footer">
+          <div class="transport-stats">
+            <div>
+              <h4>Ônibus em Operação</h4>
+              <p class="stat-value">1,842</p>
+            </div>
+            <div>
+              <h4>Linhas Ativas</h4>
+              <p class="stat-value">587</p>
+            </div>
+            <div>
+              <h4>Passageiros/Dia</h4>
+              <p class="stat-value">1.2M</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-header">
+          <h2><i class="fas fa-traffic-light"></i> Tráfego em Tempo Real</h2>
+        </div>
+        <div class="traffic-status">
+          <div class="traffic-level">
+            <div class="traffic-indicator" data-level="high"></div>
+            <p>Centro</p>
+          </div>
+          <div class="traffic-level">
+            <div class="traffic-indicator" data-level="medium"></div>
+            <p>Savassi</p>
+          </div>
+          <div class="traffic-level">
+            <div class="traffic-indicator" data-level="low"></div>
+            <p>Barreiro</p>
+          </div>
+          <div class="traffic-level">
+            <div class="traffic-indicator" data-level="high"></div>
+            <p>Contorno</p>
+          </div>
+        </div>
+        <div class="traffic-legend">
+          <span><i class="fas fa-circle" style="color: #ff4757"></i> Alto</span>
+          <span><i class="fas fa-circle" style="color: #ffa502"></i> Médio</span>
+          <span><i class="fas fa-circle" style="color: #2ed573"></i> Livre</span>
+        </div>
+      </div>
+    </section>
+    
+    <section class="dashboard-section hidden" id="safety-section">
+      <div class="card">
+        <div class="card-header">
+          <h2><i class="fas fa-shield-alt"></i> Criminalidade</h2>
+          <div class="time-filter">
+            <select id="crime-time-filter">
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+              <option value="2022">2022</option>
+              <option value="2021">2021</option>
+            </select>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="crime-chart"></canvas>
+        </div>
+        <div class="chart-footer">
+          <p><i class="fas fa-info-circle"></i> Dados consolidados pela Secretaria de Segurança Pública de MG</p>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-header">
+          <h2><i class="fas fa-map-marked"></i> Hotspots de Criminalidade</h2>
+        </div>
+        <div class="mini-map-container">
+          <div id="crime-map"></div>
+        </div>
+        <div class="crime-stats">
+          <div>
+            <h4>Região com maior índice</h4>
+            <p class="stat-value">Norte</p>
+          </div>
+          <div>
+            <h4>Crime mais comum</h4>
+            <p class="stat-value">Furto</p>
+          </div>
+          <div>
+            <h4>Variação anual</h4>
+            <p class="stat-value"><i class="fas fa-arrow-down" style="color: #2ed573"></i> 7.2%</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="dashboard-section hidden" id="economy-section">
+      <div class="card full-width">
+        <div class="card-header">
+          <h2><i class="fas fa-chart-line"></i> Indicadores Econômicos</h2>
+          <div class="time-filter">
+            <select id="economy-time-filter">
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+              <option value="2022">2022</option>
+              <option value="2021">2021</option>
+            </select>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="economic-chart"></canvas>
+        </div>
+        <div class="chart-footer">
+          <div class="economy-stats">
+            <div>
+              <h4>PIB Municipal</h4>
+              <p class="stat-value">R$ 98.4 bi</p>
+            </div>
+            <div>
+              <h4>PIB per capita</h4>
+              <p class="stat-value">R$ 39,024</p>
+            </div>
+            <div>
+              <h4>Taxa de Desemprego</h4>
+              <p class="stat-value">8.7%</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-header">
+          <h2><i class="fas fa-building"></i> Principais Empresas</h2>
+        </div>
+        <div class="companies-list">
+          <div class="company-item">
+            <div class="company-logo" style="background-color: #e3f2fd;">
+              <i class="fas fa-mobile-alt" style="color: #1976d2;"></i>
+            </div>
+            <div class="company-info">
+              <h4>Tim</h4>
+              <p>Telecomunicações</p>
+            </div>
+          </div>
+          <div class="company-item">
+            <div class="company-logo" style="background-color: #fff8e1;">
+              <i class="fas fa-utensils" style="color: #ff8f00;"></i>
+            </div>
+            <div class="company-info">
+              <h4>Supermercados BH</h4>
+              <p>Varejo</p>
+            </div>
+          </div>
+          <div class="company-item">
+            <div class="company-logo" style="background-color: #f3e5f5;">
+              <i class="fas fa-pills" style="color: #8e24aa;"></i>
+            </div>
+            <div class="company-info">
+              <h4>EMS</h4>
+              <p>Farmacêutica</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="dashboard-section hidden" id="about-section">
+      <div class="card full-width">
+        <div class="card-header">
+          <h2><i class="fas fa-info-circle"></i> Sobre o Projeto</h2>
+        </div>
+        <div class="about-content">
+          <div class="about-text">
+            <h3>BH Urban Analytics</h3>
+            <p>Este dashboard foi desenvolvido para fornecer insights sobre os dados urbanos de Belo Horizonte, integrando informações de transporte, segurança, economia e demografia em uma interface interativa e acessível.</p>
+            <p>Os dados apresentados são provenientes de fontes públicas e APIs oficiais, quando disponíveis, complementados com dados simulados para fins demonstrativos.</p>
+            <div class="data-sources">
+              <h4>Fontes de Dados:</h4>
+              <ul>
+                <li>Prefeitura de Belo Horizonte</li>
+                <li>Secretaria de Segurança Pública de MG</li>
+                <li>IBGE</li>
+                <li>BHTRANS</li>
+                <li>APIs de Dados Abertos</li>
+              </ul>
+            </div>
+          </div>
+          <div class="about-image">
+            <img src="https://viverbem.unimedbh.com.br/wp-content/uploads/2022/10/GettyImages-522865120-1-900x450.jpg" alt="Vista de Belo Horizonte">
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <footer>
+    <div class="footer-content">
+      <div class="footer-logo">
+        <h3><i class="fas fa-city"></i> BH Urban Analytics</h3>
+        <p>Transformando dados em insights urbanos</p>
+      </div>
+      <div class="footer-links">
+        <div class="link-group">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="#overview-section">Visão Geral</a></li>
+            <li><a href="#transport-section">Transporte</a></li>
+            <li><a href="#safety-section">Segurança</a></li>
+            <li><a href="#economy-section">Economia</a></li>
+          </ul>
+        </div>
+        <div class="link-group">
+          <h4>Recursos</h4>
+          <ul>
+            <li><a href="#">API</a></li>
+            <li><a href="#">Documentação</a></li>
+            <li><a href="#">Metodologia</a></li>
+          </ul>
+        </div>
+        <div class="link-group">
+          <h4>Contato</h4>
+          <ul>
+            <li><a href="#"><i class="fas fa-envelope"></i> contato@bhanalytics.com</a></li>
+            <li><a href="#"><i class="fab fa-twitter"></i> @bh_analytics</a></li>
+            <li><a href="#"><i class="fab fa-github"></i> github.com/bh-analytics</a></li>
+          </ul>
+        </div>
       </div>
     </div>
-    <div class="chart-container">
-        <h2>Indicadores Econômicos de Minas Gerais</h2>
-        <canvas id="economic-chart"></canvas>
+    <div class="footer-bottom">
+      <p>&copy; 2024 BH Urban Analytics. Todos os direitos reservados.</p>
+      <p class="version">Versão 2.1.0</p>
     </div>
+  </footer>
 
-  </div>
-  
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
   <script src="script.js"></script>
 </body>
 </html>
